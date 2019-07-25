@@ -4,15 +4,17 @@ import { fetchCountries, fetchCountriesAndCompetitions } from '../../actions';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import './Browse.scss';
+import Skeleton from 'react-loading-skeleton';
+import CompetitionCard from '../atoms/CompetitionCard';
 
 class Browse extends Component {
   componentDidMount() {
-		this.props.fetchCountries();
-		this.props.fetchCountriesAndCompetitions();
-		// this.props.fetchLeagues();
+    this.props.fetchCountries();
+    this.props.fetchCountriesAndCompetitions();
+    // this.props.fetchCompetitions();
   }
 
-  // renderAdmin(stream) {
+  // renderAdmin (stream) {
   //   if (stream.userId === this.props.currentUserId) {
   //     return (
   //       <div className="right floated content">
@@ -21,22 +23,24 @@ class Browse extends Component {
   //       </div>
   //     )
   //   }
-	// }
-	
-	renderCompetitionList(competitions) {
-		return _.map(competitions, ({league_id, name, logo}) => {
-			return (
-				<Link className="card" to={`leagues/${league_id}`} key={league_id}>
-					<img src={logo} alt={name} />
-					<span className="note">{name}</span>
-				</Link>
-			);
-		});
-	}
+  // }
+
+  renderCompetitionList(competitions) {
+    if (competitions) {
+      const content = _.map(competitions, (competition) => {
+        return (
+          <CompetitionCard competition={competition} key={competition.league_id} />
+        );
+      });
+      return <div className="competitions">{content}</div>
+    } else {
+      return <Skeleton height={80} />;
+    }
+  }
 
   renderCountryList() {
     return this.props.countries.map(({ name, code, competitions }) => {
-			const imageSrc = `https://www.countryflags.io/${code}/flat/64.png`;
+      const imageSrc = `https://www.countryflags.io/${code}/flat/64.png`;
       return (
         <div className="country" key={code}>
 					{/* {this.renderAdmin(stream)} */}
@@ -44,7 +48,7 @@ class Browse extends Component {
 						<img src={imageSrc} alt="" style={{ width: '32px', height: '32px', marginRight: '8px' }} />
 						<h3>{name}</h3>
 					</div>
-					<div className="cards">{this.renderCompetitionList(competitions)}</div>
+					{this.renderCompetitionList(competitions)}
         </div>
       )
     })
@@ -64,7 +68,9 @@ class Browse extends Component {
     return (
       <div className="browse">
         <h1>Browse</h1>
-        <div className="countries">{this.renderCountryList()}</div>
+				<div className="countries">
+					{this.renderCountryList()}
+				</div>
         {/* {this.renderCreate()} */}
       </div>
     );

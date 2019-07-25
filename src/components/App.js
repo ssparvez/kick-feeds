@@ -10,13 +10,11 @@ import Content from './molecules/Content.js';
 const App = () => {
   // switch makes sure to match first one only
   return (
-		<Router history={history}>
+    <Router history={history}>
 			<div className="app"> {/* is this div tag necessary */}
 				<Header />
-				<div className="main">
-					<SideNav />
-					<Content />
-				</div>
+				<SideNav />
+				<Content />
 			</div>
 		</Router>
   )

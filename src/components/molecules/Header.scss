@@ -1,44 +1,50 @@
 @import "../../styles/responsive.scss";
 
 .header {
-	background-color: #FFF;
-	border-bottom: 1px solid #e1e1e1;
-	padding: 16px 64px;
-	display: flex;
-	justify-content: space-between;
+  grid-area: header;
+  background-color: #FFF;
+  border-bottom: 1px solid #e1e1e1;
+  padding: 16px 64px;
+  display: flex;
+  justify-content: space-between;
 
-	.logo {
-		text-decoration: none;
-		font-weight: 700;
-		font-size: 28px;
-		color: #0e9;
-		margin-right: 8px;
-	}
+  @include for-phone-only {
+    padding: 16px;
+  }
 
-	.description {
-		color: #b7b7b7;
-		font-size: 12px;
-		margin-bottom: 6px;
-		// margin: 0px 0px 6px 8px;
-		display: none;
-		vertical-align: middle;
 
-		@include for-tablet-landscape-up {
-			display: inline-block;
-		}
-	}
+  .logo {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 28px;
+    color: #0e9;
+    margin-right: 8px;
+  }
 
-	.menu {
-		display: flex;
+  .description {
+    color: #b7b7b7;
+    font-size: 12px;
+    margin-bottom: 6px;
+    // margin: 0px 0px 6px 8px;
+    display: none;
+    vertical-align: middle;
 
-		.item {
-			text-decoration: none;
-			font-weight: 400;
-			color: #000;
+    @include for-tablet-landscape-up {
+      display: inline-block;
+    }
+  }
 
-			&:not(:last-child) {
-				margin-right: 32px;
-			}
-		}
-	}
+  .menu {
+    display: flex;
+
+    .item {
+      text-decoration: none;
+      font-weight: 400;
+      color: #000;
+
+      &:not(:last-child) {
+        margin-right: 32px;
+      }
+    }
+  }
 }

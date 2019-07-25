@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchTeam } from '../../actions';
 import Loader from '../atoms/Loader';
 
-class League extends Component {
+class Competition extends Component {
   componentDidMount() {
-		// grab league id from url path
+		// grab competition id from url path
 		const { id } = this.props.match.params;
 
 		this.props.fetchTeam(id);
@@ -39,4 +38,4 @@ const mapStateToProps = (state) => {
   }; // convert object back to an arraY
 }
 
-export default connect(mapStateToProps, { fetchTeam })(League);
+export default connect(mapStateToProps, { fetchTeam })(Competition);

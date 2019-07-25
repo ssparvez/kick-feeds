@@ -1,3 +1,10 @@
+@import "../../styles/responsive.scss";
+
 .content {
-	flex: 1;
+  grid-area: content;
+  padding: 32px 48px 32px 16px;
+
+  @include for-phone-only {
+    padding: 16px;
+  }
 }

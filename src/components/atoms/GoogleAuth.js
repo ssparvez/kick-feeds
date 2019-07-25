@@ -40,14 +40,14 @@ class GoogleAuth extends Component {
       return (
         <button onClick={this.onSignOutClick} className="outlined red">
           <i className="material-icons" style={ { transform: 'rotate(180deg)'}}>logout</i>
-          Sign Out
+          <span className="text">Sign Out</span>
         </button>
       );
     } else {
       return (
         <button onClick={this.onSignInClick} className="filled red">
           <i className="material-icons">exit_to_app</i>
-          <span>Sign In With Google</span>
+          <span className="text">Sign In With Google</span>
         </button>
       )
     }
