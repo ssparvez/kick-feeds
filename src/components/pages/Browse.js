@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCountries, fetchCountriesAndCompetitions } from '../../actions';
-import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import './Browse.scss';
 import Skeleton from 'react-loading-skeleton';
@@ -13,17 +12,6 @@ class Browse extends Component {
     this.props.fetchCountriesAndCompetitions();
     // this.props.fetchCompetitions();
   }
-
-  // renderAdmin (stream) {
-  //   if (stream.userId === this.props.currentUserId) {
-  //     return (
-  //       <div className="right floated content">
-  //         <Link to={`/streams/edit/${stream.id}`} className="ui button primary">Edit</Link>
-  //         <Link to={`/streams/delete/${stream.id}`} className="ui button negative">Delete</Link>
-  //       </div>
-  //     )
-  //   }
-  // }
 
   renderCompetitionList(competitions) {
     if (competitions) {
@@ -43,7 +31,6 @@ class Browse extends Component {
       const imageSrc = `https://www.countryflags.io/${code}/flat/64.png`;
       return (
         <div className="country" key={code}>
-					{/* {this.renderAdmin(stream)} */}
 					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<img src={imageSrc} alt="" style={{ width: '32px', height: '32px', marginRight: '8px' }} />
 						<h3>{name}</h3>
@@ -54,16 +41,6 @@ class Browse extends Component {
     })
   }
 
-  // renderCreate() {
-  //   if (this.props.isSignedIn) {
-  //     return (
-  //       <div style={{textAlign: 'right'}}>
-  //         <Link to="streams/new" className="ui button primary">Create Stream</Link>
-  //       </div>
-  //     )
-  //   }
-  // }
-
   render() {
     return (
       <div className="browse">
@@ -71,7 +48,6 @@ class Browse extends Component {
 				<div className="countries">
 					{this.renderCountryList()}
 				</div>
-        {/* {this.renderCreate()} */}
       </div>
     );
   }

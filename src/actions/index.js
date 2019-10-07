@@ -1,4 +1,5 @@
 import football from '../apis/football';
+import kickfeeds from '../apis/kickfeeds';
 import { SIGN_IN, SIGN_OUT, FETCH_COMPETITIONS, FETCH_COUNTRIES, FETCH_COMPETITION, FETCH_STANDINGS, FETCH_TEAM, FETCH_COMPETITION_MATCHES, FETCH_MATCH, FETCH_TEAMS } from './types';
 import _ from 'lodash';
 
@@ -28,11 +29,12 @@ export const fetchCountryCompetitions = (country, season = 2018) => async dispat
 };
 
 export const fetchCountries = () => async dispatch => {
-  const response = await football.get('/countries');
+  const response = await kickfeeds.get('/countries');
 
+  console.log(response);
   dispatch({
     type: FETCH_COUNTRIES,
-    payload: response.data.api.countries
+    payload: response.data.countries
   });
 };
 
