@@ -1,0 +1,56 @@
+.wall {
+  .note-list {
+    height: calc(100vh - 170px);
+    overflow: scroll;
+
+
+
+    .item {
+      display: flex;
+      align-items: center;
+
+      .time {
+        color: #b7b7b7;
+        font-size: 12px;
+      }
+
+      i {
+        opacity: 0;
+        cursor: pointer;
+
+        &.clip {
+          margin-right: 8px;
+        }
+
+        transition: opacity 300ms ease;
+      }
+
+      .message {
+        cursor: pointer;
+      }
+
+      &:hover {
+        .message {
+          background-color: #ccc;
+        }
+
+        i {
+          opacity: 1;
+
+        }
+      }
+
+      .message {
+        margin-left: 8px;
+        margin-right: auto;
+        transition: background-color 300ms ease;
+      }
+
+      &:not(:last-child) {
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

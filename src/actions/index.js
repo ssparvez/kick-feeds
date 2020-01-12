@@ -1,120 +1,88 @@
-import football from '../apis/football';
-import kickfeeds from '../apis/kickfeeds';
-import { SIGN_IN, SIGN_OUT, FETCH_COMPETITIONS, FETCH_COUNTRIES, FETCH_COMPETITION, FETCH_STANDINGS, FETCH_TEAM, FETCH_COMPETITION_MATCHES, FETCH_MATCH, FETCH_TEAMS } from './types';
-import _ from 'lodash';
+import jotter from '../apis/jotter';
+import { SIGN_IN, SIGN_IN_WITH_EMAIL, SIGN_OUT, CREATE_NOTE, RESET_ERROR_MESSAGE, DELETE_NOTE, FETCH_NOTES_REQUEST, FETCH_NOTES_SUCCESS, FETCH_NOTES_FAILURE } from './types';
+import jwtDecode from 'jwt-decode';
+import history from '../history';
 
-export const signIn = (userId) => {
+
+export const signInWithToken = (userId) => {
+  history.push('/wall');
+
   return {
     type: SIGN_IN,
     payload: userId
   };
 };
 
+export const signInWithEmail = ({ email, password }) => async dispatch => {
+  const response = await jotter.post('/users/signin', { email, password });
+  console.log('response? ', response);
+
+  localStorage.setItem('token', response.data.token);
+
+  const userData = jwtDecode(response.data.token);
+
+  dispatch({
+    type: SIGN_IN_WITH_EMAIL,
+    payload: userData.userId,
+  });
+
+  history.push('/wall');
+};
+
 export const signOut = () => {
+  localStorage.removeItem('token');
+
+  history.push("/");
   return {
     type: SIGN_OUT
   };
 };
 
-export const fetchCountryCompetitions = (country, season = 2018) => async dispatch => {
-  const response = await football.get(`/leagues/country/${country}/${season}`);
+export const fetchNotes = () => async dispatch => {
+  dispatch({ type: FETCH_NOTES_REQUEST });
 
-  // console.log(response.data.api.leagues);
-  if (!_.isArray(response.data.api.leagues)) {
+  try {
+    const response = await jotter.get('/notes');
+
     dispatch({
-      type: FETCH_COMPETITIONS, // FETCH_COMPETITIONS_FOR_COUNTRY
-      payload: response.data.api.leagues
+      type: FETCH_NOTES_SUCCESS,
+      payload: response.data.notes
+    });
+  } catch ({ response }) {
+    console.log(response)
+    if (!response || response.status === 401) { // if unauthorized, signout
+      dispatch(signOut());
+    }
+    dispatch({
+      type: FETCH_NOTES_FAILURE,
+      error: true
     });
   }
 };
 
-export const fetchCountries = () => async dispatch => {
-  const response = await kickfeeds.get('/countries');
+export const createNote = note => async (dispatch, getState) => {
+  const { userId } = getState().auth;
+  console.log(note);
+  const response = await jotter.post('/notes', { content: note, userId });
 
-  console.log(response);
-  dispatch({
-    type: FETCH_COUNTRIES,
-    payload: response.data.countries
-  });
-};
-
-export const fetchCountriesAndCompetitions = () => async (dispatch, getState) => {
-  await dispatch(fetchCountries());
-
-  const countries = getState().football.countries;
-  _.forOwn(countries, country => {
-    dispatch(fetchCountryCompetitions(country.name))
-  });
-};
-
-export const fetchCompetition = (leagueId) => async dispatch => {
-  const response = await football.get(`/leagues/league/${leagueId}`);
-
-  // console.log(response.data.api);
+  console.log('response', response);
 
   dispatch({
-    type: FETCH_COMPETITION,
-    payload: response.data.api.leagues
-  });
-};
-
-export const fetchStandings = (leagueId) => async (dispatch, getState) => {
-  const response = await football.get(`/leagueTable/${leagueId}`);
-
-  dispatch({
-    type: FETCH_STANDINGS,
-    payload: response.data.api.standings
-  });
-};
-
-export const fetchCompetitionMatches = (leagueId) => async (dispatch, getState) => {
-  const response = await football.get(`/fixtures/league/${leagueId}`);
-
-  dispatch({
-    type: FETCH_COMPETITION_MATCHES,
-    payload: response.data.api.fixtures
-  });
-};
-
-export const fetchCompetitionAndStandings = (leagueId) => async (dispatch, getState) => {
-  await dispatch(fetchCompetition(leagueId));
-  await dispatch(fetchStandings(leagueId));
-  await dispatch(fetchCompetitionMatches(leagueId));
-  await dispatch(fetchTeams(leagueId));
-} // could just call each action from the component instead
-
-export const fetchTeams = (leagueId) => async (dispatch, getState) => {
-  const response = await football.get(`/teams/league/${leagueId}`);
-
-  dispatch({
-    type: FETCH_TEAMS,
-    payload: response.data.api.teams
+    type: CREATE_NOTE,
+    payload: response.data.createdNote
   });
 }
 
-export const fetchTeam = (teamId) => async dispatch => {
-  const response = await football.get(`/teams/team/${teamId}`);
-
-  console.log(response.data.api);
+export const deleteNote = noteId => async (dispatch) => {
+  await jotter.delete('/notes/' + noteId);
 
   dispatch({
-    type: FETCH_TEAM,
-    payload: response.data.api.teams
+    type: DELETE_NOTE,
+    payload: noteId
   });
-};
+}
 
-export const fetchMatch = (fixtureId) => async dispatch => {
-  const response = await football.get(`/fixtures/id/${fixtureId}`);
-
-  console.log(response.data.api);
-
-  dispatch({
-    type: FETCH_MATCH,
-    payload: response.data.api.fixtures
-  });
-};
-
-export const fetchMatchTeams = (homeTeamId, awayTeamId) => async (dispatch, getState) => {
-  await dispatch(fetchTeam(homeTeamId));
-  await dispatch(fetchTeam(awayTeamId));
-} // could just call each action from the component instead
+// Resets the currently visible error message.
+export const resetErrorMessage = () => ({
+  type: RESET_ERROR_MESSAGE
+})

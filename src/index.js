@@ -8,6 +8,12 @@ import './styles/index.scss';
 import App from './components/App';
 import reducers from './reducers';
 
+import { Router } from 'react-router-dom';
+
+import history from './history';
+import { ToastProvider } from 'react-awesome-toasts';
+
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -17,7 +23,11 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ToastProvider>
+      <Router history={history}>
+        <App />
+      </Router>
+    </ToastProvider>
   </Provider>,
   document.getElementById('root')
 );

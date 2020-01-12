@@ -1,0 +1,23 @@
+@import '../../styles/responsive.scss';
+
+#landing {
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  img {
+    width: 50%;
+
+    @include for-phone-only {
+      display: none;
+    }
+  }
+
+  .signup-action {
+    color: #0074d9;
+    text-align: center;
+    cursor: pointer;
+  }
+}

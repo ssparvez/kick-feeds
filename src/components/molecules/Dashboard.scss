@@ -1,0 +1,22 @@
+@import "../../styles/responsive.scss";
+
+#dashboard {
+  @include for-tablet-portrait-up {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    // grid-template-rows: auto 1fr;
+
+    grid-template-areas:
+      "header header"
+      "side-nav content";
+  }
+
+  #content {
+    grid-area: content;
+    padding: 32px 48px 32px 16px;
+
+    @include for-phone-only {
+      padding: 16px;
+    }
+  }
+}

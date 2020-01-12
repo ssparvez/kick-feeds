@@ -1,8 +1,7 @@
 @import "../../styles/responsive.scss";
 
-.header {
+#header {
   grid-area: header;
-  background-color: #FFF;
   border-bottom: 1px solid #e1e1e1;
   padding: 16px 64px;
   display: flex;
@@ -29,7 +28,7 @@
     display: none;
     vertical-align: middle;
 
-    @include for-tablet-landscape-up {
+    @include for-tablet-portrait-up {
       display: inline-block;
     }
   }

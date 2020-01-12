@@ -1,15 +1,6 @@
-@import "../styles/responsive.scss";
-
-
 // global scss?
 .app {
-  @include for-tablet-portrait-up {
-    display: grid;
-    grid-template-columns: 250px minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-
-    grid-template-areas:
-      "header header"
-      "side-nav content";
+  &.dark {
+    background-color: #060059;
   }
 }
