@@ -1,0 +1,29 @@
+#tag-form {
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    input[name="description"] {
+      width: 400px;
+      height: 60px;
+    }
+
+    .circle-picker {
+      margin-top: 16px;
+    }
+  }
+
+
+  input {
+    margin-top: 12px;
+  }
+
+  .cancel {
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  .send {
+    padding: 8px 12px;
+  }
+}
