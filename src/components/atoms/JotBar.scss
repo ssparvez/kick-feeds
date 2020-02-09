@@ -9,11 +9,20 @@
     width: calc(100% - 40px);
   }
 
-  i {
+  i.search {
     position: absolute;
     top: 13px;
     left: 13px;
     color: rgba(0, 0, 0, 0.7);
+  }
+
+  i.send {
+    position: absolute;
+    top: 13px;
+    right: 132px;
+    color: #0074d9;
+    border-radius: 4px;
+    cursor: pointer;
   }
 
   input {

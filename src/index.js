@@ -23,7 +23,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <ToastProvider>
+    <ToastProvider timeout="1350">
       <Router history={history}>
         <App />
       </Router>

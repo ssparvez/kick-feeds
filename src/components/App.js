@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { signInWithToken } from '../actions';
 import Wall from './pages/Wall';
-import Tags from './pages/Tag';
+import Tags from './pages/Tags';
 import PageNotFound from './pages/errors/PageNotFound';
 
 class App extends Component {
@@ -32,9 +32,9 @@ class App extends Component {
     return (
       <Fragment>
         <Switch>
-          <Route path={["/", "/signup"]} exact component={Landing}/>
+          <Route path={["/", "/signup", "/confirmation/:token"]} exact component={Landing}/>
           <Route path="/wall" exact component={Wall} />
-          <Route path="/tags" exact component={Tags} />
+          <Route path={["/tags", "/tags/create"]} exact component={Tags} />
           <Route component={PageNotFound} />
         </Switch>
       </Fragment>

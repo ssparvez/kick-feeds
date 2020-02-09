@@ -1,11 +1,30 @@
 import jotter from '../apis/jotter';
-import { SIGN_IN, SIGN_IN_WITH_EMAIL, SIGN_OUT, CREATE_NOTE, RESET_ERROR_MESSAGE, DELETE_NOTE, FETCH_NOTES_REQUEST, FETCH_NOTES_SUCCESS, FETCH_NOTES_FAILURE } from './types';
+import {
+  SIGN_IN,
+  SIGN_IN_WITH_EMAIL,
+  SIGN_OUT,
+  CREATE_NOTE,
+  RESET_ERROR_MESSAGE,
+  DELETE_NOTE,
+  FETCH_NOTES_REQUEST,
+  FETCH_NOTES_SUCCESS,
+  FETCH_NOTES_FAILURE,
+  EDIT_NOTE,
+  CREATE_TAG,
+  FETCH_TAGS_REQUEST,
+  FETCH_TAGS_SUCCESS,
+  FETCH_TAGS_FAILURE,
+  SIGN_UP,
+  CONFIRM_USER_REQUEST,
+  CONFIRM_USER_SUCCESS,
+  CONFIRM_USER_FAILURE
+} from './types';
 import jwtDecode from 'jwt-decode';
 import history from '../history';
 
 
 export const signInWithToken = (userId) => {
-  history.push('/wall');
+  // history.push('/wall');
 
   return {
     type: SIGN_IN,
@@ -26,7 +45,25 @@ export const signInWithEmail = ({ email, password }) => async dispatch => {
     payload: userData.userId,
   });
 
+  console.log('hey')
   history.push('/wall');
+};
+
+export const signUp = ({ email, password }) => async dispatch => {
+  try {
+    await jotter.post('/users/signup', { email, password });
+    // console.log('response? ', response);
+
+
+    dispatch({
+      type: SIGN_UP,
+      // payload: userData.userId,
+    });
+
+    history.push('/signup?email-sent=true')
+  } catch (err) {
+
+  }
 };
 
 export const signOut = () => {
@@ -36,6 +73,23 @@ export const signOut = () => {
   return {
     type: SIGN_OUT
   };
+};
+
+export const confirmUser = (token) => async dispatch => {
+  dispatch({ type: CONFIRM_USER_REQUEST });
+
+  try {
+    await jotter.post('/users/confirmation', { token });
+
+    dispatch({
+      type: CONFIRM_USER_SUCCESS,
+    })
+    // then sign in?
+  } catch (err) {
+    dispatch({
+      type: CONFIRM_USER_FAILURE
+    })
+  }
 };
 
 export const fetchNotes = () => async dispatch => {
@@ -82,7 +136,57 @@ export const deleteNote = noteId => async (dispatch) => {
   });
 }
 
+export const createTag = tag => async (dispatch, getState) => {
+  const { userId } = getState().auth;
+  const response = await jotter.post('/tags', { ...tag, userId });
+
+  console.log('response', response);
+
+  dispatch({
+    type: CREATE_TAG,
+    payload: response.data.createdTag
+  });
+
+  history.push('/tags');
+}
+
+export const editNote = (noteId, values) => async dispatch => {
+  // PATCH: replace specfic properties, PUT: replace all properties
+  const response = await jotter.patch('/notes/' + noteId, values);
+
+  console.log(response);
+
+  dispatch({
+    type: EDIT_NOTE,
+    payload: response.data
+  });
+
+  // history.push('/');
+}
+
+export const fetchTags = () => async dispatch => {
+  dispatch({ type: FETCH_TAGS_REQUEST });
+
+  try {
+    const response = await jotter.get('/tags');
+
+    dispatch({
+      type: FETCH_TAGS_SUCCESS,
+      payload: response.data.tags
+    });
+  } catch ({ response }) {
+    console.log(response)
+    if (!response || response.status === 401) { // if unauthorized, signout
+      dispatch(signOut());
+    }
+    dispatch({
+      type: FETCH_TAGS_FAILURE,
+      error: true
+    });
+  }
+};
+
 // Resets the currently visible error message.
 export const resetErrorMessage = () => ({
   type: RESET_ERROR_MESSAGE
-})
+});
