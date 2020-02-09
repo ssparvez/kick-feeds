@@ -1,64 +1,100 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
 import './LoginForm.scss';
+import { Formik, Field, Form } from 'formik';
+import { withToast } from 'react-awesome-toasts';
+import { connect } from 'react-redux';
+import { signInWithEmail } from '../../../actions';
+
 
 class LoginForm extends Component {
   // supposed to return input element
   // reduxform gives form props
-  renderInput = ({ input, label, icon, type }) => { // label is passed as prop below
+  renderInput = ({ field, label, icon, type }) => { // label is passed as prop below
     return (
       <div className="field">
         <i className="material-icons">{icon}</i>
-        <input {...input} autoComplete="off" placeholder={label} type={type}/>
+        <input {...field} autoComplete="off" placeholder={label} type={type}/>
       </div>
     ); // same as below, adds all props to input
   }
 
-  onSubmit = (formValues) => {
-    console.log(this);
-    console.log(formValues)
-    console.log('subnitting form');
-    this.props.onSubmit(formValues);
+  onSubmit = (formValues, { setSubmitting }) => {
+    setTimeout(() => {
+      // this.props.onSubmit(formValues);
+      this.props.signInWithEmail(formValues);
+
+      setSubmitting(false);
+    }, 400);
+  }
+
+  toastErrors(errors) {
+    const toastProps = {
+      actionText: 'Ok',
+      ariaLabel: 'An error occurred while logging in, click to acknowledge',
+      onActionClick: this.props.toast.hide,
+    };
+    let text;
+    if (Object.keys(errors).length > 1) {
+      text = "An email and password is required"
+    } else {
+      text = Object.values(errors)[0];
+    }
+
+    toastProps.text = text;
+
+    this.props.toast.show(toastProps);
   }
 
   render() {
     // name prop is always required
     //props.handleSubmit comes from redux form
     return (
-      <form className="login-form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <div id="banner">Jotter</div>
-        <div className="description">The place to gather your thoughts</div>
-        <Field name="email" component={this.renderInput} label="Email" icon="email" type="email" />
-        <Field name="password" component={this.renderInput} label="Password" icon="vpn_key" type="password" />
-        <button className="filled blue">
-          <i className="material-icons">exit_to_app</i>
-          <span className="text">Sign In</span>
-        </button>
-      </form>
+      <Formik initialValues={{email: '', password: ''}} onSubmit={this.onSubmit} validate={this.validate} validateOnChange={false} validateOnBlur={false}>
+        
+        {({ isSubmitting }) => (
+          <Form className="login-form">
+            <div id="banner">Jotter</div>
+            <div className="description">The place to gather your thoughts</div>
+            <Field name="email" label="Email" type="email" icon="email" component={this.renderInput} />
+            <Field name="password" label="Password" type="password" icon="vpn_key" component={this.renderInput} />
+            <button type="submit" className="filled blue" disabled={isSubmitting}>
+              <i className="material-icons">exit_to_app</i>
+              <span className="text">Sign In</span>
+            </button>
+          </Form>
+        )}
+      </Formik>
     )
   }
+
+  validate = formValues => {
+    console.log('VALIDATING');
+    const errors = {};
+
+    if (!formValues.email) {
+      // only runs if user did not enter email
+      errors.email = 'An email is required'; // prop must match name prop on field tag
+    }
+
+    if (!formValues.password) {
+      // only runs if user did not enter title
+      errors.password = 'A password is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      this.toastErrors(errors);
+    }
+
+    return errors;
+  };
 }
 
-const validate = formValues => {
-  const errors = {};
+const mapStateToProps = (state) => {
+  return {
+    notes: state.jotter.notes,
+    currentUserId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn,
+  }; // convert object back to an arra
+}
 
-  if (!formValues.email) {
-    // only runs if user did not enter email
-    errors.email = 'You must enter a email'; // prop must match name prop on field tag
-  }
-
-  if (!formValues.password) {
-    // only runs if user did not enter title
-    errors.password = 'You must enter a password';
-  }
-
-  console.log('we got errors');
-
-  return errors;
-};
-
-// have to combine connect function somehow
-export default reduxForm({
-  form: 'loginForm',
-  validate
-})(LoginForm);
+export default connect(mapStateToProps, { signInWithEmail })(withToast(LoginForm));
