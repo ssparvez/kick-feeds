@@ -126,3 +126,16 @@ a {
   color: #000;
   text-decoration: none;
 }
+
+*::-webkit-scrollbar {
+  width: 4px;
+
+  // &-track {
+  //   background-color: rgba(0, 0, 0, 0.1);
+  // }
+
+  &-thumb {
+    background-color: rgba(0, 238, 119, 0.3);
+    border-radius: 2px;
+  }
+}

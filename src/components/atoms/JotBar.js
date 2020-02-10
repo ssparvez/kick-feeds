@@ -31,7 +31,7 @@ export default class JotBar extends Component {
       <div className="search-bar">
 					<i className="material-icons search">search</i>
 					<input placeholder="What's on your mind?" onChange={this.handleChange} onKeyPress={this.keyPressed} value={this.state.input} type="textarea" />
-          <i className="material-icons send" data-tip="Add Note" onClick={this.submitNote}>add_box</i>
+          <i className="material-icons send" data-tip="Jot it" onClick={this.submitNote}>add_circle_outline</i>
           <ReactTooltip />
 			</div>
     )
