@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { signInWithToken } from '../actions';
 import Wall from './pages/Wall';
 import Tags from './pages/Tags';
+import TagDetail from './pages/TagDetail';
+
 import PageNotFound from './pages/errors/PageNotFound';
 
 class App extends Component {
@@ -22,11 +24,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
-
   render() {
     // switch makes sure to match first one only
     return (
@@ -35,6 +32,7 @@ class App extends Component {
           <Route path={["/", "/signup", "/confirmation/:token"]} exact component={Landing}/>
           <Route path="/wall" exact component={Wall} />
           <Route path={["/tags", "/tags/create"]} exact component={Tags} />
+          <Route path="/tags/:tagId" exact component={TagDetail} />
           <Route component={PageNotFound} />
         </Switch>
       </Fragment>
