@@ -20,11 +20,10 @@
 }
 
 .wall {
-
-
   .note-list {
     height: calc(100vh - 170px);
-    overflow: scroll;
+    overflow-y: scroll;
+    padding-right: 8px;
 
     .date {
       margin: 16px 0px;
@@ -86,12 +85,17 @@
 
       .message {
         cursor: pointer;
-        padding: 2px 4px;
+        padding: 3px 6px;
         border-radius: 4px;
+
+        &.link {
+          color: #0074d9;
+          text-decoration: underline;
+        }
       }
 
       &:hover {
-        .message {
+        .message:not(.link) {
           background-color: #ccc;
         }
 

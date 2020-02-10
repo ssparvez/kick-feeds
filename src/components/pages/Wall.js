@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './Wall.scss';
 import JotBar from '../atoms/JotBar';
-import { copyToClipboard } from '../../utils';
+import { copyToClipboard, isValidURL } from '../../utils';
 import Loader from '../atoms/Loader';
 import { connect } from 'react-redux';
 import { createNote, fetchNotes, deleteNote, fetchTags, editNote } from '../../actions';
@@ -129,7 +129,10 @@ class Wall extends Component {
           { addDateHeader && <div className="date">{dateHeader}</div>}
           <div className="item" key={_id}>
             <div className="time">{time}</div>
-            <div className="message" data-tip="Copy to clipboard" onClick={() => copyToClipboard(content, this.props.toast)}>{content}</div>
+            { isValidURL(content) ? 
+              <div className="message link" onClick={() => window.open(content.includes('http') ? content : 'http://' + content, '_blank') } data-tip="Go to site">{content}</div> : 
+              <div className="message" data-tip="Copy to clipboard" onClick={() => copyToClipboard(content, this.props.toast)}>{content}</div>
+            }
             { showTag && <div className="tag" style={{color: tagColor}}>#{tagName}</div> }
 
             <i className="material-icons add-tag" data-tip="Assign Tag" onClick={() => this.setState({showTagPicker: true, selectedNote: _id})}>library_add</i>
