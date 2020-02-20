@@ -67,12 +67,8 @@ class SignUpForm extends Component {
           {({ isSubmitting }) => (
             <Form>
               <div className="header">Create an account</div>
-              <div className="content">
-              {this.renderContent()}
-              </div>
-              <div className="actions">
-                {this.renderActions(isSubmitting)}
-              </div>
+              <div className="content">{this.renderContent()}</div>
+              <div className="actions">{this.renderActions(isSubmitting)}</div>
             </Form>
           )}
         </Formik>

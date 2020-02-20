@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Modal from './Modal';
 import history from '../../history';
 import emailConfirmedImage from '../../assets/undraw_Mail_sent_qwwx.svg';
 import emailNotConfirmedImage from '../../assets/undraw_not_found_60pq.svg';
 import { connect } from 'react-redux';
-import { withToast } from 'react-awesome-toasts';
 import { confirmUser } from '../../actions';
 import Loader from '../atoms/Loader';
 import './Confirmation.scss';
@@ -15,14 +14,6 @@ class Confirmation extends Component {
     // grab token from url
     console.log(this.props.match.params.token)
     this.props.confirmUser(this.props.match.params.token);
-  }
-
-  renderContent(title) {
-    return (
-      <Fragment>
-       
-      </Fragment>
-    )
   }
 
   render() {
@@ -47,9 +38,6 @@ class Confirmation extends Component {
           </Modal>
       );
     }
-
-
-
   }
 }
 
