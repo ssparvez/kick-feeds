@@ -4,23 +4,21 @@ import emptyImage from '../../assets/undraw_Working_oh83.svg'; // Tell Webpack t
 import Dashboard from '../molecules/Dashboard';
 import { FAB } from '../atoms/FAB';
 import { Link, Route } from 'react-router-dom';
-import TagForm from '../molecules/forms/TagForm';
+import history from '../../history';
 import './Tags.scss';
 import { connect } from 'react-redux';
 import { createTag, fetchTags } from '../../actions';
 import { withToast } from 'react-awesome-toasts';
 import Loader from '../atoms/Loader';
+import CreateTag from '../molecules/CreateTag';
+import EditTag from '../molecules/EditTag';
+import ReactTooltip from 'react-tooltip';
+import DeleteTag from '../molecules/DeleteTag';
 
 
 class Tags extends Component {
   componentDidMount() {
     this.props.fetchTags();
-  }
-
-  onCreateTag = (values) => {
-    console.log('hey!');
-    console.log('values', values);
-    this.props.createTag(values);
   }
 
   render() {
@@ -31,7 +29,10 @@ class Tags extends Component {
           <Link to="/tags/create">
             <FAB />
           </Link>
-          <Route path="/tags/create" render={() => <TagForm initialValues={{name: '', description: ''}} title="Create a new tag" mode="create" color="#f44336" onSubmit={this.onCreateTag} />} />
+          <Route path="/tags/create" exact component={CreateTag} />
+          <Route path="/tags/edit/:id" exact component={EditTag} />
+          <Route path="/tags/delete/:id" exact component={DeleteTag} />
+
         </div>
       </Dashboard>
     )
@@ -41,10 +42,21 @@ class Tags extends Component {
     return this.props.tags.map(({ name, description, color, _id }) => {
       // make sure only authorized tags can be viewed
       return (
-        <Link to={`/tags/${_id}`} className="tag" key={_id} style={{backgroundColor: color}}>
-          <div className="name">{name}</div>
-          <div className="description">{description}</div>
-        </Link>
+        <div onClick={() => history.push(`/tags/${_id}`)} className="tag" key={_id} style={{backgroundColor: color}}>
+          <div className="details">
+            <div className="name">{name}</div>
+            <div className="description">{description}</div>
+          </div>
+          <div className="actions">
+            <Link to={`/tags/edit/${_id}`} onClick={e => e.stopPropagation()}>
+              <i className="material-icons edit" data-tip="Edit">edit</i>
+            </Link>
+            <Link to={`/tags/delete/${_id}`} onClick={e => e.stopPropagation()}>
+              <i className="material-icons delete" data-tip="Remove">delete</i>
+            </Link>
+            <ReactTooltip />
+          </div>
+        </div>
       )
     })
   }
@@ -64,6 +76,10 @@ class Tags extends Component {
       }
     }
   }
+
+  // onTagEdit = (e) => {
+  //   history.push('/tags/edit/' + )
+  // }
 
 }
 

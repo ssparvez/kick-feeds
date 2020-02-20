@@ -31,7 +31,7 @@ class App extends Component {
         <Switch>
           <Route path={["/", "/signup", "/confirmation/:token"]} exact component={Landing}/>
           <Route path="/wall" exact component={Wall} />
-          <Route path={["/tags", "/tags/create"]} exact component={Tags} />
+          <Route path={["/tags", "/tags/create", "/tags/edit/:tagId", "/tags/delete/:tagId"]} exact component={Tags} />
           <Route path="/tags/:tagId" exact component={TagDetail} />
           <Route component={PageNotFound} />
         </Switch>

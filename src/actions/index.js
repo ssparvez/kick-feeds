@@ -17,7 +17,10 @@ import {
   SIGN_UP,
   CONFIRM_USER_REQUEST,
   CONFIRM_USER_SUCCESS,
-  CONFIRM_USER_FAILURE
+  CONFIRM_USER_FAILURE,
+  FETCH_TAG,
+  EDIT_TAG,
+  DELETE_TAG
 } from './types';
 import jwtDecode from 'jwt-decode';
 import history from '../history';
@@ -92,11 +95,19 @@ export const confirmUser = (token) => async dispatch => {
   }
 };
 
-export const fetchNotes = () => async dispatch => {
+export const fetchNotes = (options = {}) => async dispatch => {
   dispatch({ type: FETCH_NOTES_REQUEST });
 
+  let query = '';
+  if (Object.keys(options).length > 0) {
+    query += '?';
+    for (let key in options) {
+      query += `${key}=${options[key]}`;
+    }
+  }
+
   try {
-    const response = await jotter.get('/notes');
+    const response = await jotter.get('/notes' + query);
 
     dispatch({
       type: FETCH_NOTES_SUCCESS,
@@ -117,7 +128,7 @@ export const fetchNotes = () => async dispatch => {
 export const createNote = note => async (dispatch, getState) => {
   const { userId } = getState().auth;
   console.log(note);
-  const response = await jotter.post('/notes', { content: note, userId });
+  const response = await jotter.post('/notes', { ...note, userId });
 
   console.log('response', response);
 
@@ -185,6 +196,41 @@ export const fetchTags = () => async dispatch => {
     });
   }
 };
+
+export const fetchTag = (tagId) => async dispatch => {
+  const response = await jotter.get('/tags/' + tagId);
+
+  console.log(response);
+  dispatch({
+    type: FETCH_TAG,
+    payload: response.data
+  });
+};
+
+export const editTag = (tagId, values) => async dispatch => {
+  // PATCH: replace specfic properties, PUT: replace all properties
+  const response = await jotter.patch('/tags/' + tagId, values);
+
+  console.log(response);
+
+  dispatch({
+    type: EDIT_TAG,
+    payload: response.data
+  });
+
+  history.push('/tags');
+}
+
+export const deleteTag = tagId => async dispatch => {
+  await jotter.delete('/tags/' + tagId);
+
+  dispatch({
+    type: DELETE_TAG,
+    payload: tagId
+  });
+
+  history.push('/tags');
+}
 
 // Resets the currently visible error message.
 export const resetErrorMessage = () => ({

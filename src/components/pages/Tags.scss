@@ -13,6 +13,9 @@
     }
 
     .tag {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-left: 16px;
       margin-top: 16px;
 
@@ -35,6 +38,27 @@
 
       .description {
         font-size: 13px;
+      }
+
+      .actions {
+
+        a:not(:last-child) {
+          margin-right: 8px;
+        }
+
+        i {
+          padding: 4px;
+          background-color: rgba(250, 250, 250, 0.2);
+          border-radius: 4px;
+          color: #fff;
+          font-size: 20px;
+
+          transition: opacity 500ms ease-in;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
       }
     }
   }

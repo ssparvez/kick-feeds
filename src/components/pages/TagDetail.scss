@@ -1,0 +1,18 @@
+.tag-detail {
+  .tag-banner {
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    color: #fff;
+
+    .name {
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .description {
+      opacity: 0.8;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { CREATE_NOTE, DELETE_NOTE, FETCH_NOTES_REQUEST, FETCH_NOTES_SUCCESS, CREATE_TAG, FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, EDIT_NOTE, SIGN_OUT } from "../actions/types";
+import { CREATE_NOTE, DELETE_NOTE, FETCH_NOTES_REQUEST, FETCH_NOTES_SUCCESS, CREATE_TAG, FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, EDIT_NOTE, SIGN_OUT, FETCH_TAG, EDIT_TAG, DELETE_TAG } from "../actions/types";
 import _ from 'lodash';
 const INITIAL_STATE = { // possible default to root level?
   notes: {},
@@ -28,6 +28,14 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_TAGS_SUCCESS:
       // console.log(action.payload)
       return { ...state, isFetching: false, tags: _.mapKeys(action.payload, '_id') };
+    case FETCH_TAG:
+      // console.log(action.payload)
+      return { ...state, tag: action.payload };
+    case EDIT_TAG:
+      console.log(action.payload);
+      return { ...state, tags: { ...state.tags, [action.payload._id]: action.payload } };
+    case DELETE_TAG: // returns array copy and omits the object of the id passed in
+      return { ...state, tags: _.omit(state.tags, action.payload) };
     case SIGN_OUT: // wipe out state
       return INITIAL_STATE;
     default:

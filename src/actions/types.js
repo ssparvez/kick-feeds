@@ -20,3 +20,6 @@ export const FETCH_TAGS_SUCCESS = 'FETCH_TAGS_SUCCESS';
 export const FETCH_TAGS_FAILURE = 'FETCH_TAGS_FAILURE';
 
 export const CREATE_TAG = 'CREATE_TAG';
+export const FETCH_TAG = 'FETCH_TAG';
+export const EDIT_TAG = 'EDIT_TAG';
+export const DELETE_TAG = 'DELETE_TAG';
