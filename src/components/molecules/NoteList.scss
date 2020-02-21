@@ -1,9 +1,9 @@
 .wall .note-list {
-  height: calc(100vh - 170px);
+  height: calc(100vh - 180px);
 }
 
 .tag-detail .note-list {
-  height: calc(100vh - 154px);
+  height: calc(100vh - 268px);
 }
 
 .note-list {
@@ -23,6 +23,13 @@
   }
 
   .item {
+
+    input,
+    button {
+      margin-left: 8px;
+      z-index: 3;
+    }
+
     display: flex;
     align-items: center;
     padding: 0px 16px 8px 16px;
