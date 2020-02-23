@@ -6,7 +6,6 @@ import NoteList from '../molecules/NoteList';
 
 class Wall extends Component {
   render() {
-    console.log(this.props.notes);
     return (
       <Dashboard>
         <div id="content" className="wall">

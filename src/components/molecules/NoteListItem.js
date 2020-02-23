@@ -55,7 +55,6 @@ class NoteListItem extends Component {
   }
 
   keyPressed = (event) => {
-    // console.log(event.shiftKey);
     if (event.key === 'Enter') {
       this.updateNote();
     }

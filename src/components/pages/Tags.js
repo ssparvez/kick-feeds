@@ -15,7 +15,6 @@ import EditTag from '../molecules/EditTag';
 import ReactTooltip from 'react-tooltip';
 import DeleteTag from '../molecules/DeleteTag';
 
-
 class Tags extends Component {
   componentDidMount() {
     this.props.fetchTags();
@@ -76,15 +75,9 @@ class Tags extends Component {
       }
     }
   }
-
-  // onTagEdit = (e) => {
-  //   history.push('/tags/edit/' + )
-  // }
-
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     tags: Object.values(state.jotter.tags),
     isFetching: state.jotter.isFetching,

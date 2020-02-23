@@ -9,7 +9,6 @@ import NoteList from '../molecules/NoteList';
 
 class TagDetail extends Component {
   componentDidMount() {
-    console.log(this.props.match.params.tagId);
     this.props.fetchTag(this.props.match.params.tagId);
     // this.scrollToBottom();
   }
@@ -28,7 +27,6 @@ class TagDetail extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Dashboard>
       <div id="content" className="tag-detail">
@@ -41,7 +39,6 @@ class TagDetail extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     notes: Object.values(state.jotter.notes),
     tag: state.jotter.tag,

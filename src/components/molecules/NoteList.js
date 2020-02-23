@@ -20,12 +20,9 @@ class NoteList extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.params.match);
     if (this.props.filteredTagId) {
-      console.log(this.props.filteredTagId);
       this.props.fetchNotes({ tagId: this.props.filteredTagId });
     } else {
-      console.log('we here?');
       this.props.fetchNotes();
     }
 
@@ -41,7 +38,6 @@ class NoteList extends Component {
   onSubmit = (noteContent) => { // jotbar isnt in this component
     let note = { content: noteContent }
     if (this.props.filteredTagId) {
-      console.log(note);
       note.tagId = this.props.filteredTagId;
     }
 
@@ -102,7 +98,6 @@ class NoteList extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     notes: Object.values(state.jotter.notes),
     tags: state.jotter.tags,

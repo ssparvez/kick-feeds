@@ -77,7 +77,6 @@ class SignUpForm extends Component {
   }
 
   validate = formValues => {
-    console.log('VALIDATING');
     const errors = {};
 
     if (!formValues.email) {

@@ -10,7 +10,6 @@ class EditTag extends Component {
   }
 
   onSubmit = (formValues) => {
-    console.log(formValues);
     this.props.editTag(this.props.match.params.id, formValues);
   };
 
@@ -27,8 +26,6 @@ class EditTag extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
-  console.log(ownProps.match.params.id);
   return { tag: state.jotter.tags[ownProps.match.params.id] };
   // w react router, cannot assume each component has fetched the same data
 }

@@ -5,14 +5,10 @@ import TagForm from './forms/TagForm';
 
 class CreateTag extends Component {
   onSubmit = (values) => {
-    console.log('hey!');
-    console.log('values', values);
     this.props.createTag(values);
   }
 
   render() {
-    console.log(this.props); // bunch of props get added via redux form
-
     const initialValues = { name: '', description: '' };
 
     // name prop is always required

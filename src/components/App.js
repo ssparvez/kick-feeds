@@ -15,8 +15,7 @@ import PageNotFound from './pages/errors/PageNotFound';
 class App extends Component {
 
   componentWillMount() {
-    console.log('shello')
-    // // if token is in cache, auto sign in
+    // if token is in cache, auto sign in
     let token = localStorage.getItem('token');
     if (token) { // and if not expired?
       let decoded = jwtDecode(token);

@@ -68,7 +68,6 @@ class LoginForm extends Component {
   }
 
   validate = formValues => {
-    console.log('VALIDATING');
     const errors = {};
 
     if (!formValues.email) {

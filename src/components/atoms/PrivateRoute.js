@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class PrivateRoute extends Component {
   render() {
-    console.log('is logge', this.props.isSignedIn);
     return this.props.isSignedIn ?
       <Route { ...this.props } /> :
       <Redirect to="/" />

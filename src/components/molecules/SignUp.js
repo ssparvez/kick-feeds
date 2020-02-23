@@ -5,7 +5,6 @@ import { SignUpEmailSent } from './SignUpEmailSent';
 
 export const SignUp = () => {
   const query = new URLSearchParams(useLocation().search);
-  console.log(query.get('email-sent'));
 
   if (query.get('email-sent') === 'true') {
     return <SignUpEmailSent />

@@ -12,7 +12,6 @@ class Confirmation extends Component {
 
   componentDidMount() {
     // grab token from url
-    console.log(this.props.match.params.token)
     this.props.confirmUser(this.props.match.params.token);
   }
 
@@ -42,7 +41,6 @@ class Confirmation extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     isVerifying: state.auth.isVerifying,
     userWasVerified: state.auth.userWasVerified,

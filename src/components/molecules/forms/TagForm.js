@@ -72,7 +72,6 @@ class TagForm extends Component {
   }
 
   render() {
-    console.log(this.props.initialValues);
     return (
       <Modal id="tag-form" onDismiss={() => history.push('/tags')}>
         <Formik initialValues={this.props.initialValues} onSubmit={this.onSubmit} validate={this.validate} validateOnChange={false} validateOnBlur={false}>
@@ -93,8 +92,6 @@ class TagForm extends Component {
   }
 
   validate = formValues => {
-    console.log('VALIDATING');
-    console.log(formValues);
     const errors = {};
 
     if (!formValues.name) {

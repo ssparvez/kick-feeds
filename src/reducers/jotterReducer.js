@@ -10,29 +10,22 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_NOTES_REQUEST:
       return { ...state, isFetching: true };
     case FETCH_NOTES_SUCCESS:
-      // console.log(action.payload)
       return { ...state, isFetching: false, notes: _.mapKeys(action.payload, '_id') };
     case CREATE_NOTE:
-      console.log(action.payload);
       return { ...state, notes: { ...state.notes, [action.payload._id]: action.payload } };
     case EDIT_NOTE:
-      console.log(action.payload);
       return { ...state, notes: { ...state.notes, [action.payload._id]: action.payload } };
     case DELETE_NOTE: // returns array copy and omits the object of the id passed in
       return { ...state, notes: _.omit(state.notes, action.payload) };
     case CREATE_TAG:
-      console.log(action.payload);
       return { ...state, tags: { ...state.tags, [action.payload._id]: action.payload } };
     case FETCH_TAGS_REQUEST:
       return { ...state, isFetching: true };
     case FETCH_TAGS_SUCCESS:
-      // console.log(action.payload)
       return { ...state, isFetching: false, tags: _.mapKeys(action.payload, '_id') };
     case FETCH_TAG:
-      // console.log(action.payload)
       return { ...state, tag: action.payload };
     case EDIT_TAG:
-      console.log(action.payload);
       return { ...state, tags: { ...state.tags, [action.payload._id]: action.payload } };
     case DELETE_TAG: // returns array copy and omits the object of the id passed in
       return { ...state, tags: _.omit(state.tags, action.payload) };

@@ -37,7 +37,6 @@ export const signInWithToken = (userId) => {
 
 export const signInWithEmail = ({ email, password }) => async dispatch => {
   const response = await jotter.post('/users/signin', { email, password });
-  console.log('response? ', response);
 
   localStorage.setItem('token', response.data.token);
 
@@ -48,14 +47,12 @@ export const signInWithEmail = ({ email, password }) => async dispatch => {
     payload: userData.userId,
   });
 
-  console.log('hey')
   history.push('/wall');
 };
 
 export const signUp = ({ email, password }) => async dispatch => {
   try {
     await jotter.post('/users/signup', { email, password });
-    // console.log('response? ', response);
 
 
     dispatch({
@@ -114,7 +111,6 @@ export const fetchNotes = (options = {}) => async dispatch => {
       payload: response.data.notes
     });
   } catch ({ response }) {
-    console.log(response)
     if (!response || response.status === 401) { // if unauthorized, signout
       dispatch(signOut());
     }
@@ -127,10 +123,7 @@ export const fetchNotes = (options = {}) => async dispatch => {
 
 export const createNote = note => async (dispatch, getState) => {
   const { userId } = getState().auth;
-  console.log(note);
   const response = await jotter.post('/notes', { ...note, userId });
-
-  console.log('response', response);
 
   dispatch({
     type: CREATE_NOTE,
@@ -151,8 +144,6 @@ export const createTag = tag => async (dispatch, getState) => {
   const { userId } = getState().auth;
   const response = await jotter.post('/tags', { ...tag, userId });
 
-  console.log('response', response);
-
   dispatch({
     type: CREATE_TAG,
     payload: response.data.createdTag
@@ -164,8 +155,6 @@ export const createTag = tag => async (dispatch, getState) => {
 export const editNote = (noteId, values) => async dispatch => {
   // PATCH: replace specfic properties, PUT: replace all properties
   const response = await jotter.patch('/notes/' + noteId, values);
-
-  console.log(response);
 
   dispatch({
     type: EDIT_NOTE,
@@ -186,7 +175,7 @@ export const fetchTags = () => async dispatch => {
       payload: response.data.tags
     });
   } catch ({ response }) {
-    console.log(response)
+
     if (!response || response.status === 401) { // if unauthorized, signout
       dispatch(signOut());
     }
@@ -200,7 +189,6 @@ export const fetchTags = () => async dispatch => {
 export const fetchTag = (tagId) => async dispatch => {
   const response = await jotter.get('/tags/' + tagId);
 
-  console.log(response);
   dispatch({
     type: FETCH_TAG,
     payload: response.data
@@ -210,8 +198,6 @@ export const fetchTag = (tagId) => async dispatch => {
 export const editTag = (tagId, values) => async dispatch => {
   // PATCH: replace specfic properties, PUT: replace all properties
   const response = await jotter.patch('/tags/' + tagId, values);
-
-  console.log(response);
 
   dispatch({
     type: EDIT_TAG,

@@ -11,7 +11,6 @@ export default class JotBar extends Component {
   }
 
   keyPressed = (event) => {
-    // console.log(event.shiftKey);
     if (event.key === 'Enter') {
       this.submitNote();
     }
