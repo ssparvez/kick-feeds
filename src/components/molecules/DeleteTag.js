@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import Modal from './Modal';
 import history from '../../history';
 import { fetchTag, deleteTag } from '../../actions';
@@ -9,6 +9,7 @@ class DeleteTag extends Component {
   componentDidMount() {
     // this.props.fetchStream(this.props.match.params.id);
   }
+
   renderActions() {
     return (
       <div className="actions">

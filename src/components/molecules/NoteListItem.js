@@ -61,7 +61,7 @@ class NoteListItem extends Component {
     }
   }
 
-  updateNote() {
+  updateNote = () => {
     this.setState({ isEditMode: false });
     this.props.editNote(this.props.note._id, { content: this.state.content });
   }
