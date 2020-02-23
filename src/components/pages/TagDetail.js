@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dashboard from '../molecules/Dashboard';
 import { connect } from 'react-redux';
-import { fetchNotes, fetchTag } from '../../actions';
+import { fetchTag } from '../../actions';
 import Skeleton from 'react-loading-skeleton';
 
 import './TagDetail.scss';
@@ -40,13 +40,9 @@ class TagDetail extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    notes: Object.values(state.jotter.notes),
     tag: state.jotter.tag,
-    isFetching: state.jotter.isFetching,
-    currentUserId: state.auth.userId,
-    isSignedIn: state.auth.isSignedIn
   }; // convert object back to an arra
 }
 // export default withToast(ToastButton);
 
-export default connect(mapStateToProps, { fetchNotes, fetchTag })(TagDetail);
+export default connect(mapStateToProps, { fetchTag })(TagDetail);
