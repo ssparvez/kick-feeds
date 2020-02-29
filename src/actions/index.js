@@ -25,7 +25,6 @@ import {
 import jwtDecode from 'jwt-decode';
 import history from '../history';
 
-
 export const signInWithToken = (userId) => {
   // history.push('/wall');
 
