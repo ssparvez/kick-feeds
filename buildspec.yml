@@ -10,8 +10,8 @@ phases:
   pre_build:
     commands:
         - touch .env.production
-        - echo 'REACT_APP_GOOGLE_CLIENT_ID = $REACT_APP_GOOGLE_CLIENT_ID' >> .env.production
-        - echo 'REACT_APP_JOTTER_API_URL = $REACT_APP_JOTTER_API_URL' >> .env.production
+        - echo REACT_APP_GOOGLE_CLIENT_ID=${REACT_APP_GOOGLE_CLIENT_ID} >> .env.production
+        - echo REACT_APP_JOTTER_API_URL=${REACT_APP_JOTTER_API_URL} >> .env.production
         - cat .env.production
   build:
     commands:
