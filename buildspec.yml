@@ -1,7 +1,4 @@
 version: 0.2
-env:
-  variables:
-      BUILD_ENV: "prod"
 phases:
   install:
     commands:
@@ -9,10 +6,10 @@ phases:
         - npm install
   pre_build:
     commands:
+        - echo Generate environment variables...
         - touch .env.production
         - echo REACT_APP_GOOGLE_CLIENT_ID=${REACT_APP_GOOGLE_CLIENT_ID} >> .env.production
         - echo REACT_APP_JOTTER_API_URL=${REACT_APP_JOTTER_API_URL} >> .env.production
-        - cat .env.production
   build:
     commands:
       - echo Build started on `date`
