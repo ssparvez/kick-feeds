@@ -1,18 +1,24 @@
 version: 0.2
 env:
-    variables:
-        BUILD_ENV: "prod"
+  variables:
+      BUILD_ENV: "prod"
 phases:
-    install:
-        commands:
-            - echo Installing source NPM dependencies...
-            - npm install
-    build:
-        commands:
-            - echo Build started on `date`
-            - npm run build
+  install:
+    commands:
+        - echo Installing source NPM dependencies...
+        - npm install
+  pre_build:
+    commands:
+        - touch .env.production
+        - echo 'REACT_APP_GOOGLE_CLIENT_ID = $REACT_APP_GOOGLE_CLIENT_ID' >> .env.production
+        - echo 'REACT_APP_JOTTER_API_URL = $REACT_APP_JOTTER_API_URL' >> .env.production
+        - cat .env.production
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build
 artifacts:
-    files:
-        - '**/*'
-    base-directory: build
-    discard-paths: no
+  files:
+      - '**/*'
+  base-directory: build
+  discard-paths: no
