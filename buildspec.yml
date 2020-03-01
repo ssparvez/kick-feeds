@@ -1,7 +1,6 @@
 version: 0.2
 env:
     variables:
-        S3_BUCKET: "app.thejotter.xyz"
         BUILD_ENV: "prod"
 phases:
     install:
