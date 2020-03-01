@@ -49,7 +49,7 @@ class SignUpForm extends Component {
     return (
       <Fragment>
         <div className="message">
-          Enter the details that you'd like to setup an account width. We'll send a verification email just to make sure it's you.
+          Enter the details that you'd like to setup an account with. We'll send a verification email just to make sure it's you.
         </div>
 
         <Field name="email" type="email" placeholder="Enter an email" />
