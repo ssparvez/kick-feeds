@@ -60,7 +60,10 @@ class NoteList extends Component {
         // other svgs to use: towing, taken, warning
         const label = 'This is the beginning of your history.';
         return (
-          <EmptyState image={noNotesImage} label={label} />
+          <Fragment>
+            <EmptyState image={noNotesImage} label={label} />
+            <JotBar onSubmit={this.onSubmit} />
+          </Fragment>
         )
       }
     }
