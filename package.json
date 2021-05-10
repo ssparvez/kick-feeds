@@ -6,7 +6,7 @@
     "axios": "^0.18.0",
     "formik": "^2.1.2",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "node-sass": "^4.11.0",
     "react": "^16.8.4",
     "react-awesome-toasts": "0.0.9",
